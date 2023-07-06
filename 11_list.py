@@ -7,3 +7,4 @@ print(a)
 print("slicing the list")
 
 print(a[0:3])
+print(a[2:1])
