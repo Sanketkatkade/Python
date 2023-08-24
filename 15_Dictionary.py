@@ -1,9 +1,9 @@
-myDict = {
-    "fast" : "a quick manner",
-    "sanket" : "a coder",
-    "marks" : [1,2,3],
-    "anotherDict" : {"harry" : "youtuber"}
-}
+# myDict = {
+#     "fast" : "a quick manner",
+#     "sanket" : "a coder",
+#     "marks" : [1,2,3],
+#     "anotherDict" : {"harry" : "youtuber"}
+# }
 
 
 # print(myDict['fast'])
@@ -31,5 +31,20 @@ myDict = {
 # myDict.update(updateDict) # updates the dictionary by adding the key-value pairs from updateDict
 # print(myDict)
 
-print(myDict.get("harry")) # if the key is not present then it will print none
-print(myDict["harry"]) # it will throw an error because it is not presnt in the dictionary
+# print(myDict.get("harry")) # if the key is not present then it will print none
+# print(myDict["harry"]) # it will throw an error because it is not presnt in the dictionary
+
+
+
+# Example
+myDict = {
+    "Pankha" : "Fan",
+    "Ghadi" : "Watch",
+    "Dabba" : "Box"
+}
+print(myDict.keys())
+a = input("Enter you word\n ")
+# print("The meaning of your word is :",myDict[a])
+
+# Below line will not throw an error
+print("The meaning of your word is :",myDict.get(a))
