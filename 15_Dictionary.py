@@ -25,7 +25,7 @@ print(myDict.items())#it print (key,value)for all items in the dictionary
 print(myDict)
 updateDict = {
     "lovish" : "friend",
-    "sanket" : "a dancer"
+    "sanket" : "a coder"
 }
 
 myDict.update(updateDict) # updates the dictionary by adding the key-value pairs from updateDict
