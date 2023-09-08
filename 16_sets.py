@@ -19,7 +19,9 @@ c.add(3) # it will not add these 3 because 3 is already added in the set
 c.add((4, 5, 6)) # we can't add dictionary in the set
 # print(c)
 # print(len(c))
+
 c.remove((4, 5, 6))
+
 # c.remove(15) # It will throw an error because 15 is not present in the set
 print(c)
 print(c.pop())
