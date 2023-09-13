@@ -1,11 +1,18 @@
-def percent(mark):
-    p = ((mark[0] + mark[1] + mark[2] + mark[3]) / 400) * 100
-    return p
+# def percent(mark):
+#     p = ((mark[0] + mark[1] + mark[2] + mark[3]) / 400) * 100
+#     return p
 
-mark1 = [45, 78, 67, 89, 99]
-percentage1 = percent(mark1)
+# mark1 = [45, 78, 67, 89, 99]
+# percentage1 = percent(mark1)
 
-mark2 = [43, 57, 98, 78, 76]
-percentage2 = percent(mark2)
+# mark2 = [43, 57, 98, 78, 76]
+# percentage2 = percent(mark2)
 
-print(percentage1, percentage2)
+# print(percentage1, percentage2)
+
+
+def greet(name = "Stranger"):  #set default value to the name
+    print("Good day," + name)
+
+greet("Sanket.")
+greet()
