@@ -19,7 +19,7 @@ while True:
         print("\nThanks for playing")
         break
     if a not in mylist:
-        print("Invalid input! try again...")
+        print("[!] Invalid input! try again...\n")
         continue
     total += 1
     print("[$] Computers Choice : ", res)
