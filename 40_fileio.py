@@ -23,6 +23,11 @@
 
 with open('40_another.txt','r') as f:
     a = f.read()
+if 'coder' in a:
+    print("coder is present")
+else:
+    print("coder is not present")
+     
 with open('40_Sample.txt','w') as f:
     a = f.write("I am sanket")
     print(a)
