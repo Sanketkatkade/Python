@@ -21,13 +21,22 @@
 # data = f.write(" and i am a coder ")
 # f.close()
 
+# with open('40_another.txt','r') as f:
+#     a = f.read()
+# if 'coder' in a:
+#     print("coder is present")
+# else:
+#     print("coder is not present")
+
+# with open('40_Sample.txt','w') as f:
+#     a = f.write("I am sanket")
+#     print(a)
+
+
 with open('40_another.txt','r') as f:
-    a = f.read()
-if 'coder' in a:
-    print("coder is present")
-else:
-    print("coder is not present")
-     
-with open('40_Sample.txt','w') as f:
-    a = f.write("I am sanket")
-    print(a)
+    content = f.read()
+
+content = content.replace("donkey","$%^&^%%")
+
+with open("40_another.txt",'w') as f:
+    f.write(content)
