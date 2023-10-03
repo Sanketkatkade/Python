@@ -19,11 +19,17 @@
 
 class Employee:
     company = " Google"
+    salary = 100
 
 harry = Employee()
 sanket = Employee()
-print(harry.company)
-print(sanket.company)
-Employee.company = "YouTube"
-print(harry.company)
-print(sanket.company)
+# harry.salary = 300
+# sanket.salary = 250
+
+# print(harry.company)
+# print(sanket.company)
+# Employee.company = "YouTube"
+# print(harry.company)
+# print(sanket.company)
+print(harry.salary)
+print(sanket.salary)

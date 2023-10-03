@@ -7,3 +7,11 @@ print(greeting + name)
 str = "SanketIsGood"
 d = str[0::2]
 print(d)
+
+apple = '''Hii Harry,
+How are you?
+How is going?
+'''
+
+for character in apple:
+    print(character)
