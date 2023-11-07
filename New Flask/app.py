@@ -156,20 +156,47 @@
 
 
 
-from flask import Flask, render_template, request,flash,redirect
+from flask import Flask, render_template, request, flash, redirect
 from pymongo import MongoClient
-from flask_login import LoginManager
-login_manager = init_app(app)
+from flask_login import LoginManager, login_user, UserMixin
 
 app = Flask(__name__)
+
+class UserDict(UserMixin):
+    def __init__(self, data):
+        self.data = data
+
+    def get_id(self):
+        return str(self.data['_id'])
+
+    def is_active(self):
+        return self.data['is_active']
+
+    def is_authenticated(self):
+        return True  # You can customize this based on your authentication logic
+
+    def is_anonymous(self):
+        return False  # You can customize this based on your authentication logic
+
+    @classmethod
+    def get(cls, user_id):
+        user_data = users_collection.find_one({"_id": user_id})
+        if user_data:
+            user_data['_id'] = str(user_data['_id'])
+            return UserDict(user_data)
+        return None
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
 # Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017')
 app.config['SECRET_KEY'] = 'thisissecret'
-db = client['mydb']  # Replace 'your_database_name' with your database name
+db = client['mydb']
 
 # Define a MongoDB collection (not a SQLAlchemy model)
-users_collection = db['User']  # Corrected collection name
+users_collection = db['User']
 
 @app.route("/main")
 def main():
@@ -197,27 +224,126 @@ def register():
         }
 
         # Insert the registration data into the MongoDB collection
-        inserted_id = users_collection.insert_one(registration_data).inserted_id  # Use the correct collection name
+        inserted_id = users_collection.insert_one(registration_data).inserted_id
 
-        if(inserted_id):
-            flash('user has been register successfully','success')
-            return redirect ('/login')
+        if inserted_id:
+            flash('User has been registered successfully', 'success')
+            return redirect('/login')
         return "User registration failed"
-
-
 
     return render_template("register.html")
 
-
-@login_manager_user_loader
+@login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    user_data = users_collection.find_one({"_id": user_id})
+    if user_data:
+        user_data['_id'] = str(user_data['_id'])
+        user = UserDict(user_data)
+        return user
 
-@app.route("/login",methods =['GET','POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        user_data = None
         username = request.form.get('username')
         password = request.form.get('password')
-        return render_template("login.html")
+        user_data = users_collection.find_one({"username": username, "password": password})
+        if user_data:
+            user_data['_id'] = str(user_data['_id'])
+            user = UserDict(user_data)
+            login_user(user)
+            return redirect('/main')
+        else:
+            flash('Invalid Credentials', 'warning')
+            return redirect('/login')
+    return render_template("login.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+{
+    "_id":123,
+    "username":123,
+    "password":123,
+    "fname": 123,
+    "lname":123,
+    "profile_image": "https://imgur.com/evy6",
+    "notes":{
+        "link1": ["Important","School"],
+        "link2": ["Entertainment"]
+    }
+}
+
+
+
+
+
+
+# from flask import Flask, render_template, request, flash, redirect
+# from flask_login import LoginManager, login_user, UserMixin
+# from pymongo import MongoClient
+
+# app = Flask(__name__)
+
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+
+# # Connect to MongoDB
+# client = MongoClient('mongodb://localhost:27017')
+# app.config['SECRET_KEY'] = 'thisissecret'
+# db = client['mydb']
+
+# # Define a MongoDB collection
+# users_collection = db['users']
+
+# class User(UserMixin):
+#     def __init__(self, user_id, username, password):
+#         self.id = user_id
+#         self.username = username
+#         self.password = password
+
+# # Implement a method to query the user from the database by username
+# def get_user(username):
+#     user_data = users_collection.find_one({"username": username})
+#     if user_data:
+#         user = User(user_data["_id"], user_data["username"], user_data["password"])
+#         return user
+#     return None
+
+# @app.route("/main")
+# def main():
+#     return render_template("main.html")
+
+# @app.route("/index")
+# def index():
+#     return render_template("index.html")
+
+# @app.route("/register", methods=['GET', 'POST'])
+# def register():
+#     if request.method == 'POST':
+#         email = request.form.get('email')
+#         password = request.form.get('password')
+#         username = request.form.get('uname')
+#         fname = request.form.get('fname')
+#         lname = request.form.get('lname')
+
+#         registration_data = {
+#             "email": email,
+#             "password": password,
+#             "username": username,
+#             "first_name": fname,
+#             "last_name": lname
+#         }
+
+#         inserted_id = users_collection.insert_one(registration_data).inserted_id
+
+#         if inserted_id:
+#             flash('User has been registered successfully', 'success')
+#             return redirect('/login')
+#         return "User registration failed"
+
+#     return render_template("register.html")
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return User
