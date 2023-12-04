@@ -9,7 +9,8 @@ timestamp = int(time.strftime('%S'))
 print(timestamp)
 
 timestamp = int(time.strftime('%H'))
-
+ 
+ 
 if 6 <= timestamp <= 12:
     print("Good Morning Sir!")
 
