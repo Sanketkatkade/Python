@@ -1,5 +1,6 @@
 def game():
     return 6798
+    
 Score = game()
 with open("highscore.txt" )as f:
     highscoreStr = int(f.read())
