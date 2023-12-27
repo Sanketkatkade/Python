@@ -14,6 +14,7 @@ timestamp = int(time.strftime('%H'))
 if 6 <= timestamp <= 12:
     print("Good Morning Sir!")
 
+
 elif 12 <= timestamp <= 18:
     print("Good Afternoon Sir")
 
